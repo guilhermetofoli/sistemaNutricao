@@ -5,8 +5,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    SequelizeModule.forRoot({
+      dialect: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'sua_senha',
+      database: 'sistema_nutricao',
+      autoLoadModels: true,
+      synchronize: true,
+    }),
+  ],
 })
 export class AppModule {}
