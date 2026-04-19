@@ -1,22 +1,32 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { NutritionistsModule } from './modules/nutritionists/nutritionists.module';
 
 @Module({
   imports: [
-    SequelizeModule.forRoot({
-      dialect: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '', // Sua senha do MySQL aqui
-      database: 'sistema_nutricao',
-      autoLoadModels: true,
-      synchronize: true, // Cria as tabelas automaticamente baseado nos seus .model.ts
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    SequelizeModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        dialect: 'mysql',
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_DATABASE'),
+        autoLoadModels: true,
+        synchronize: true,
+      }),
     }),
     AuthModule,
     UsersModule,
+    NutritionistsModule,
   ],
 })
 export class AppModule {}
