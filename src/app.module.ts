@@ -11,7 +11,7 @@ import { AppService } from './app.service';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'sua_senha',
+      password: '',
       database: 'sistema_nutricao',
       autoLoadModels: true,
       synchronize: true,
