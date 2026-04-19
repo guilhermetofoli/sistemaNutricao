@@ -4,15 +4,11 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
-  // Habilita a validação global (resolve o problema dos DTOs)
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true, // Remove campos que não estão no DTO
-    forbidNonWhitelisted: true, // Erro se enviarem campos extras
-    transform: true, // Transforma tipos automaticamente
-  }));
+
+  // Ativa o firewall de entrada de dados
+  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(3000);
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  console.log('Servidor rodando em: http://localhost:3000');
 }
 bootstrap();

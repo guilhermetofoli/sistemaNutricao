@@ -1,6 +1,8 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
-@Table
+@Table({
+  tableName: 'usuarios', // ou 'users'
+})
 export class User extends Model {
   @Column({
     type: DataType.INTEGER,
@@ -9,28 +11,17 @@ export class User extends Model {
   })
   declare id: number;
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  nome!: string;
+  @Column({ allowNull: false })
+  declare nome: string;
 
-  @Column({
-    type: DataType.STRING,
-    unique: true,
-    allowNull: false,
-  })
-  email!: string;
+  @Column({ allowNull: false, unique: true })
+  declare email: string;
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  senha!: string;
-
+  @Column({ allowNull: false })
+  declare senha: string;
   @Column({
     type: DataType.ENUM('ADMIN', 'NUTRI', 'PACIENTE'),
-    allowNull: false,
+    defaultValue: 'PACIENTE',
   })
-  tipo!: string;
+  declare tipo: string;
 }

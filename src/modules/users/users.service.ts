@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './user.model';
 import * as bcrypt from 'bcrypt';
@@ -7,7 +7,7 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
   constructor(
     @InjectModel(User)
-    private userModel: typeof User, // O segredo é o 'typeof' aqui!
+    private userModel: typeof User,
   ) {}
 
   async findByEmail(email: string): Promise<User | null> {
@@ -19,6 +19,15 @@ export class UsersService {
   }
 
   async create(userData: any): Promise<User> {
+    // Debug de Admin: Veja o que está chegando no terminal
+    console.log('--- INSPECIONANDO PAYLOAD ---');
+    console.log(userData);
+
+    // Validação de segurança: Se não houver senha, breca o processo aqui
+    if (!userData.senha) {
+      throw new BadRequestException('Campo "senha" não encontrado no JSON enviado.');
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(userData.senha, salt);
     
