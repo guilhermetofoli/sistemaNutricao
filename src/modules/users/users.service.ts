@@ -18,6 +18,10 @@ export class UsersService {
     return this.userModel.findByPk(id);
   }
 
+  async findAll(): Promise<User[]> {
+    return this.userModel.findAll();
+  }
+
   async create(userData: any): Promise<User> {
     // Debug de Admin: Veja o que está chegando no terminal
     console.log('--- INSPECIONANDO PAYLOAD ---');
