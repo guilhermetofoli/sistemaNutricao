@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { ConfigModule } from '@nestjs/config'
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -11,11 +10,13 @@ import { AppService } from './app.service';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '',
+      password: '', // Sua senha do MySQL aqui
       database: 'sistema_nutricao',
       autoLoadModels: true,
-      synchronize: true,
+      synchronize: true, // Cria as tabelas automaticamente baseado nos seus .model.ts
     }),
+    AuthModule,
+    UsersModule,
   ],
 })
 export class AppModule {}
