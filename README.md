@@ -4,6 +4,16 @@ Este documento contém a documentação completa, guia de instalação e o códi
 
 ---
 
+## EQUIPE DO PROJETO ##
+
+> Abner Cardoso
+
+
+> Guilherme Tófoli
+
+
+> Matheus Coronado
+
 ## 🛠️ 1. GUIA DE INSTALAÇÃO E AMBIENTE
 
 ### Comandos para Instalação de Dependências
