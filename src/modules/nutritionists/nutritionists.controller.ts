@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards, Patch, Delete } from '@nestjs/common';
 import { NutritionistsService } from './nutritionists.service';
 import { CreateNutritionistDto } from './dto/create-nutritionist.dto';
 import { UpdateNutritionistDto } from './dto/update-nutritionist.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth-guard'; // Se você já criou o guard
+import { JwtAuthGuard } from '../auth/jwt-auth-guard';
 
 @Controller('nutritionists')
 export class NutritionistsController {
@@ -22,5 +22,17 @@ export class NutritionistsController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.nutritionistsService.findOne(+id);
+  }
+
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  update(@Param('id') id: string, @Body() dto: UpdateNutritionistDto) {
+    return this.nutritionistsService.update(+id, dto);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  remove(@Param('id') id: string) {
+    return this.nutritionistsService.remove(+id);
   }
 }

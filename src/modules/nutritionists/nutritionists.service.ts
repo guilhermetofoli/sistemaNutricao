@@ -28,10 +28,23 @@ export class NutritionistsService {
   async update(id: number, updateDto: UpdateNutritionistDto): Promise<Nutritionist> {
   const nutritionist = await this.nutritionistModel.findByPk(id); // ou this.nutritionistModel
   
+
+  
   if (!nutritionist) {
     throw new NotFoundException(`Nutricionista com ID ${id} não encontrado`);
   }
 
   return nutritionist.update(updateDto);
-}
-}
+  }
+  // MÉTODO QUE FALTAVA: O DELETE
+    async remove(id: number): Promise<void> {
+      const nutritionist = await this.nutritionistModel.findByPk(id);
+      
+      if (!nutritionist) {
+        throw new NotFoundException(`Nutricionista com ID ${id} não encontrado`);
+      }
+
+      // Executa o Hard Delete no MySQL
+      await nutritionist.destroy();
+    }
+  }
