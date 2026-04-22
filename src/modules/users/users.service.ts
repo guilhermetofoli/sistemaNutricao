@@ -40,4 +40,20 @@ export class UsersService {
       senha: hashedPassword,
     });
   }
+
+  async update(id: number, dto: any): Promise<User> {
+    const user = await this.userModel.findByPk(id);
+    if (!user) throw new NotFoundException(`Usuário ${id} não encontrado`);
+    return user.update(dto);
+  }
+
+  async remove(id: number): Promise<void> {
+    const user = await this.userModel.findByPk(id);
+    if (!user) throw new NotFoundException(`Usuário ${id} não encontrado`);
+    
+    // IMPORTANTE: Isso vai apagar o usuário. 
+    // Se ele tiver um Nutricionista vinculado, o banco pode barrar a exclusão por causa da FK.
+    await user.destroy();
+  }
+
 }
