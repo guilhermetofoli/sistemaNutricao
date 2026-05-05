@@ -1,0 +1,234 @@
+.page {
+  animation: fadeUp 0.4s ease;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.btnNew {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 11px 22px;
+  background: var(--green-deep);
+  color: var(--white);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background var(--transition);
+  white-space: nowrap;
+}
+
+.btnNew:hover {
+  background: var(--green-mid);
+}
+
+/* ── Toolbar ─────────────────────────────────── */
+.toolbar {
+  margin-bottom: 20px;
+}
+
+.search {
+  width: 100%;
+  max-width: 360px;
+  padding: 11px 16px;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: var(--radius);
+  font-size: 14px;
+  background: var(--white);
+  outline: none;
+  color: var(--text-dark);
+  transition: border-color var(--transition);
+}
+
+.search:focus {
+  border-color: var(--green-accent);
+}
+
+/* ── States ──────────────────────────────────── */
+.loading {
+  text-align: center;
+  color: var(--text-light);
+  padding: 60px;
+  font-size: 15px;
+}
+
+.empty {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--text-light);
+}
+
+.empty span {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+
+.empty p {
+  font-size: 16px;
+}
+
+/* ── Table ───────────────────────────────────── */
+.tableWrap {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table thead {
+  background: var(--cream);
+}
+
+.table th {
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-light);
+  border-bottom: 1px solid var(--cream-dark);
+}
+
+.table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--cream-dark);
+  color: var(--text-dark);
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: var(--cream);
+}
+
+.idCell {
+  color: var(--text-light) !important;
+  font-size: 12px !important;
+  font-weight: 600;
+}
+
+.nameCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--green-pale);
+  color: var(--green-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.emailCell {
+  color: var(--text-light) !important;
+  font-size: 13px !important;
+}
+
+/* ── Badges ──────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 40px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.badge.green {
+  background: var(--green-pale);
+  color: var(--green-mid);
+}
+
+.badge.blue {
+  background: #e8f0fe;
+  color: #1a56db;
+}
+
+.badge.gray {
+  background: #f0f0ec;
+  color: #5a5a50;
+}
+
+/* ── Row actions ─────────────────────────────── */
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btnEdit {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--green-pale);
+  color: var(--green-mid);
+  transition: background var(--transition);
+}
+
+.btnEdit:hover {
+  background: var(--green-accent);
+  color: var(--white);
+}
+
+.btnDelete {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  background: #fff0f0;
+  color: var(--error);
+  transition: background var(--transition);
+}
+
+.btnDelete:hover {
+  background: var(--error);
+  color: var(--white);
+}
+
+.btnDelete:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
