@@ -5,7 +5,8 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Ativa o firewall de entrada de dados
+  app.enableCors(); 
+
   app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(3000);

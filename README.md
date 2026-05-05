@@ -1,6 +1,6 @@
-# SISTEMA DE GESTÃO DE NUTRIÇÃO#
+# SISTEMA DE GESTÃO DE NUTRIÇÃO #
 
-Este documento contém a documentação completa, guia de instalação e o código-fonte consolidado para o sistema desenvolvido em **NestJS**, **Sequelize (MySQL)** e **Autenticação JWT**.
+Este documento contém a documentação completa, guia de instalação e o código-fonte consolidado para o sistema desenvolvido em **NestJS**, **React (Vite)**, **Sequelize (MySQL)** e **Autenticação JWT**.
 
 ---
 
@@ -8,9 +8,7 @@ Este documento contém a documentação completa, guia de instalação e o códi
 
 > Abner Cardoso
 
-
 > Guilherme Tófoli
-
 
 > Matheus Coronado
 
@@ -19,99 +17,69 @@ Este documento contém a documentação completa, guia de instalação e o códi
 ### Comandos para Instalação de Dependências
 Execute estes comandos na raiz do projeto para garantir que todos os módulos necessários estejam presentes:
 
+#### **Core e Banco de Dados (NestJS)**
+`npm install --save @nestjs/sequelize sequelize sequelize-typescript mysql2`
 
-# Core e Banco de Dados (MySQL/Sequelize)
-` npm install --save @nestjs/sequelize sequelize sequelize-typescript mysql2 `
-
-# Autenticação e Segurança (JWT/Bcrypt)
+#### **Autenticação e Segurança**
 `npm install --save @nestjs/jwt @nestjs/passport passport passport-jwt bcrypt`
 
-# Validação e Utilitários (DTOs)
+#### **Interface e Comunicação (React/Vite)**
+`npm install axios react-router-dom @vitejs/plugin-react`
+
+#### **Validação e Tipagens**
 `npm install --save class-validator class-transformer @nestjs/mapped-types`
-
-# Tipagens de Desenvolvimento (TypeScript)
-`npm install --save-dev @types/bcrypt @types/passport-jwt @types/passport-local`
-
-# Configuração do Banco de Dados (MySQL)
-Certifique-se de que o MySQL está rodando (XAMPP/Docker) e crie o banco:
-
-
-##  2. GUIA DE TESTES (THUNDER CLIENT / POSTMAN)
-
-Para validar o funcionamento da API, siga a ordem de execução abaixo para garantir que o fluxo de autenticação e integridade de dados seja respeitado.
-
-###  2.1 Autenticação e Usuários
-
-#### **Cadastrar Usuário**
-* **Método:** `POST`
-* **URL:** `http://localhost:3000/users`
-* **Body (JSON):**
-    ```json
-    {
-      "nome": "Guilherme Silva",
-      "email": "guilherme@teste.com",
-      "senha": "123",
-      "tipo": "NUTRI"
-    }
-    ```
-
-#### **Realizar Login (Obter Token)**
-* **Método:** `POST`
-* **URL:** `http://localhost:3000/auth/login`
-* **Body (JSON):**
-    ```json
-    {
-      "email": "guilherme@teste.com",
-      "senha": "123"
-    }
-    ```
-* **Ação:** Copie o valor de `access_token` retornado no JSON.
+`npm install --save-dev @types/bcrypt @types/passport-jwt`
 
 ---
 
-###  2.2 Gestão de Nutricionistas (Rotas Privadas)
+##  2. COMO EXECUTAR O SISTEMA
 
-> **OBSERVAÇÃO:** Para todas as rotas abaixo, você deve ir na aba **Auth** do Thunder Client, selecionar **Bearer Token** e colar o token obtido no login.
+O projeto agora funciona de forma integrada. Você deve manter **dois terminais** abertos simultaneamente:
 
-#### **Vincular Perfil de Nutricionista**
-* **Método:** `POST`
-* **URL:** `http://localhost:3000/nutritionists`
-* **Body (JSON):**
-    ```json
-    {
-      "crn": "12345/SP",
-      "especialidade": "Nutrição Esportiva",
-      "valor_consulta": 150.00,
-      "endereco_atendimento": "Av. Principal, 1000",
-      "userId": 1
-    }
-    ```
+### **2.1 Servidor Backend (API)**
+* **Comando:** `npm run start:dev`
+* **URL:** `http://localhost:3000`
+* **Função:** Gerencia a conexão com o MySQL e as regras de negócio.
 
-#### **Listar Todos (Com Relacionamento)**
-* **Método:** `GET`
-* **URL:** `http://localhost:3000/nutritionists`
-* **Resultado:** O sistema deve retornar o perfil do nutricionista com os dados do usuário ("Guilherme Silva") incorporados.
-
-#### **Atualizar Dados (PATCH)**
-* **Método:** `PATCH`
-* **URL:** `http://localhost:3000/nutritionists/1`
-* **Body (JSON):**
-    ```json
-    {
-      "valor_consulta": 180.00,
-      "especialidade": "Nutrição Funcional"
-    }
-    ```
-
-#### **Remover Registro (DELETE)**
-* **Método:** `DELETE`
-* **URL:** `http://localhost:3000/nutritionists/1`
-* **Resultado:** Status `200 OK` ou `204 No Content`. Uma nova tentativa de `GET` deve retornar `404 Not Found`.
+### **2.2 Interface Frontend (Web)**
+* **Comando:** `npx vite --port 5173`
+* **URL:** `http://localhost:5173`
+* **Função:** Interface gráfica para o usuário final.
 
 ---
 
-###  2.3 Códigos de Resposta Esperados
-* **200/201:** Sucesso na operação.
-* **401 Unauthorized:** Token ausente, inválido ou expirado.
-* **404 Not Found:** Recurso (ID) não existe no banco de dados.
-* **500 Internal Server Error:** Falha de conexão com o MySQL ou erro de lógica.
+##  3. GUIA DE TESTES E FLUXO PRINCIPAL
+
+Com a interface ativa, você pode realizar os testes diretamente no navegador:
+
+#### **Passo 1: Criar Conta**
+* Acesse a tela de **Register** no navegador.
+* Preencha os dados (o sistema criará o registro no MySQL automaticamente).
+
+#### **Passo 2: Autenticação**
+* Realize o **Login** com o e-mail cadastrado.
+* O sistema armazenará o Token JWT e liberará o acesso ao Dashboard.
+
+#### **Passo 3: Gestão de Nutricionistas**
+* Dentro do sistema, você poderá cadastrar CRN, especialidade e valores.
+* O frontend enviará o Token automaticamente em todas as requisições privadas.
+
+---
+
+##  4. ENDPOINTS DA API (REFERÊNCIA)
+
+Se precisar validar manualmente via **Thunder Client**, utilize os caminhos abaixo:
+
+* **POST** `/users` -> Cadastro de usuário.
+* **POST** `/auth/login` -> Login (gera o Token).
+* **GET** `/nutritionists` -> Lista todos (Requer Token).
+* **POST** `/nutritionists` -> Cadastra perfil (Requer Token).
+
+---
+
+##  5. CHECKLIST DE AMBIENTE (XAMPP)
+
+* [ ] MySQL rodando na porta **3306**.
+* [ ] Banco de dados **`sistema_nutricao`** criado.
+* [ ] Usuário: **`root`** / Senha: **`(vazio)`**.
+* [ ] **CORS** habilitado no arquivo `main.ts` do backend.
